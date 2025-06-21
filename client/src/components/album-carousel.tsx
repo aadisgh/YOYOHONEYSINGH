@@ -36,58 +36,48 @@ export default function AlbumCarousel({ onAlbumSelect }: AlbumCarouselProps) {
   }
 
   return (
-    <section className="py-20 relative">
+    <section className="py-20">
       <div className="container mx-auto px-4">
-        <h2 className="text-4xl md:text-5xl font-black text-center mb-16 neon-text text-neon-blue">
+        <h2 className="text-4xl md:text-5xl font-black text-center mb-16 gradient-text">
           TRENDING ALBUMS
         </h2>
         
-        <div className="relative overflow-hidden">
-          <div className="flex space-x-8 overflow-x-auto scrollbar-hide py-8" style={{ scrollSnapType: 'x mandatory' }}>
-            {albums?.map((album, index) => (
-              <div 
-                key={album.id} 
-                className="flex-shrink-0 group cursor-pointer" 
-                style={{ scrollSnapAlign: 'center' }}
-              >
-                <div className="relative album-3d">
-                  <img
-                    src={album.coverUrl}
-                    alt={album.title}
-                    className="w-72 h-72 rounded-2xl shadow-2xl group-hover:scale-105 transition-all duration-500 animate-float"
-                    style={{
-                      boxShadow: `0 15px 35px ${
-                        index % 4 === 0 ? 'rgba(139, 92, 246, 0.4)' :
-                        index % 4 === 1 ? 'rgba(236, 72, 153, 0.4)' :
-                        index % 4 === 2 ? 'rgba(59, 130, 246, 0.4)' :
-                        'rgba(16, 185, 129, 0.4)'
-                      }`,
-                      animationDelay: `${index * 0.5}s`,
-                    }}
-                  />
-                  <div className="absolute inset-0 glassmorphic rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                    <Button
-                      onClick={() => onAlbumSelect(album)}
-                      className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm hover:bg-white/30 border-0"
-                    >
-                      <Play className="text-2xl text-neon-green ml-1 w-6 h-6" fill="currentColor" />
-                    </Button>
-                  </div>
-                </div>
-                <div className="mt-6 text-center">
-                  <h3 className={`text-xl font-bold ${
-                    index % 4 === 0 ? 'text-neon-purple' :
-                    index % 4 === 1 ? 'text-neon-pink' :
-                    index % 4 === 2 ? 'text-neon-blue' :
-                    'text-neon-green'
-                  }`}>
-                    {album.title}
-                  </h3>
-                  <p className="text-gray-400">{album.artist}</p>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {albums?.map((album, index) => (
+            <div 
+              key={album.id} 
+              className="card-modern p-6 hover-lift cursor-pointer group"
+              onClick={() => onAlbumSelect(album)}
+            >
+              <div className="relative mb-4">
+                <img
+                  src={album.coverUrl}
+                  alt={album.title}
+                  className="w-full aspect-square object-cover rounded-lg"
+                />
+                <div className="absolute inset-0 bg-black/50 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                  <Button
+                    size="sm"
+                    className="bg-gold text-black rounded-full w-12 h-12 hover:scale-110 transition-transform"
+                  >
+                    <Play className="w-4 h-4 ml-0.5" fill="currentColor" />
+                  </Button>
                 </div>
               </div>
-            ))}
-          </div>
+              <div className="text-center">
+                <h3 className={`text-lg font-bold mb-1 ${
+                  index % 4 === 0 ? 'text-gold' :
+                  index % 4 === 1 ? 'text-orange' :
+                  index % 4 === 2 ? 'text-red' :
+                  'text-purple'
+                }`}>
+                  {album.title}
+                </h3>
+                <p className="text-muted-foreground text-sm">{album.artist}</p>
+                <p className="text-xs text-muted-foreground mt-1">{album.releaseYear}</p>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>

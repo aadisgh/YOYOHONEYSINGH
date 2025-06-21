@@ -55,7 +55,7 @@ export default function AudioPlayer({
   const progressPercentage = duration > 0 ? (currentTime / duration) * 100 : 0;
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 glassmorphic border-t border-white/10">
+    <div className="fixed bottom-0 left-0 right-0 z-50 card-modern border-t border-border">
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           
@@ -65,17 +65,17 @@ export default function AudioPlayer({
               <img
                 src={currentTrack.coverUrl}
                 alt={currentTrack.title}
-                className="w-12 h-12 md:w-16 md:h-16 rounded-lg shadow-lg animate-rotate-3d"
+                className="w-12 h-12 md:w-16 md:h-16 rounded-lg object-cover"
               />
               {isLoading && (
                 <div className="absolute inset-0 rounded-lg bg-black/50 flex items-center justify-center">
-                  <div className="animate-spin w-4 h-4 border-2 border-neon-purple border-t-transparent rounded-full"></div>
+                  <div className="animate-spin w-4 h-4 border-2 border-gold border-t-transparent rounded-full"></div>
                 </div>
               )}
             </div>
             <div className="hidden md:block min-w-0 flex-1">
-              <h4 className="font-bold text-white truncate">{currentTrack.title}</h4>
-              <p className="text-sm text-gray-400 truncate">{currentTrack.artist}</p>
+              <h4 className="font-bold text-foreground truncate">{currentTrack.title}</h4>
+              <p className="text-sm text-muted-foreground truncate">{currentTrack.artist}</p>
             </div>
             <StaticVisualizer className="hidden md:flex ml-4" />
           </div>
@@ -85,31 +85,31 @@ export default function AudioPlayer({
             <Button
               variant="ghost"
               size="sm"
-              className="p-2 hover:bg-white/10 rounded-full transition-colors hidden md:block"
+              className="p-2 hover:bg-muted rounded-full transition-colors hidden md:block"
             >
-              <SkipBack className="w-4 h-4 text-gray-400 hover:text-white" />
+              <SkipBack className="w-4 h-4 text-muted-foreground hover:text-foreground" />
             </Button>
             
             <Button
               onClick={onTogglePlayPause}
               disabled={isLoading}
-              className="w-12 h-12 bg-gradient-to-r from-neon-purple to-neon-pink rounded-full flex items-center justify-center hover:scale-110 transition-transform animate-glow disabled:opacity-50"
+              className="w-12 h-12 bg-gradient-to-r from-gold to-orange text-black rounded-full flex items-center justify-center hover:scale-105 transition-transform disabled:opacity-50"
             >
               {isLoading ? (
-                <div className="animate-spin w-4 h-4 border-2 border-white border-t-transparent rounded-full"></div>
+                <div className="animate-spin w-4 h-4 border-2 border-black border-t-transparent rounded-full"></div>
               ) : isPlaying ? (
-                <Pause className="w-5 h-5 text-white" fill="currentColor" />
+                <Pause className="w-5 h-5" fill="currentColor" />
               ) : (
-                <Play className="w-5 h-5 text-white ml-1" fill="currentColor" />
+                <Play className="w-5 h-5 ml-0.5" fill="currentColor" />
               )}
             </Button>
             
             <Button
               variant="ghost"
               size="sm"
-              className="p-2 hover:bg-white/10 rounded-full transition-colors hidden md:block"
+              className="p-2 hover:bg-muted rounded-full transition-colors hidden md:block"
             >
-              <SkipForward className="w-4 h-4 text-gray-400 hover:text-white" />
+              <SkipForward className="w-4 h-4 text-muted-foreground hover:text-foreground" />
             </Button>
           </div>
 
@@ -118,21 +118,21 @@ export default function AudioPlayer({
             <Button
               variant="ghost"
               size="sm"
-              className="p-2 hover:bg-white/10 rounded-full transition-colors"
+              className="p-2 hover:bg-muted rounded-full transition-colors"
             >
-              <Heart className="w-4 h-4 text-gray-400 hover:text-neon-pink transition-colors" />
+              <Heart className="w-4 h-4 text-muted-foreground hover:text-red transition-colors" />
             </Button>
             
             <Button
               variant="ghost"
               size="sm"
               onClick={handleVolumeToggle}
-              className="p-2 hover:bg-white/10 rounded-full transition-colors"
+              className="p-2 hover:bg-muted rounded-full transition-colors"
             >
               {isMuted || volume === 0 ? (
-                <VolumeX className="w-4 h-4 text-gray-400 hover:text-white" />
+                <VolumeX className="w-4 h-4 text-muted-foreground hover:text-foreground" />
               ) : (
-                <Volume2 className="w-4 h-4 text-gray-400 hover:text-white" />
+                <Volume2 className="w-4 h-4 text-muted-foreground hover:text-foreground" />
               )}
             </Button>
             
@@ -153,23 +153,23 @@ export default function AudioPlayer({
             <Button
               variant="ghost"
               size="sm"
-              className="p-2 hover:bg-white/10 rounded-full transition-colors"
+              className="p-2 hover:bg-muted rounded-full transition-colors"
             >
-              <Maximize2 className="w-4 h-4 text-gray-400 hover:text-white" />
+              <Maximize2 className="w-4 h-4 text-muted-foreground hover:text-foreground" />
             </Button>
           </div>
         </div>
 
         {/* Progress Bar */}
         <div className="mt-3">
-          <div className="flex items-center space-x-2 text-xs text-gray-400">
+          <div className="flex items-center space-x-2 text-xs text-muted-foreground">
             <span className="w-10 text-right">{formatTime(currentTime)}</span>
-            <div className="flex-1 h-1 bg-gray-600 rounded-full cursor-pointer relative group">
+            <div className="flex-1 h-2 bg-muted rounded-full cursor-pointer relative group">
               <div 
-                className="h-full bg-gradient-to-r from-neon-purple to-neon-pink rounded-full relative"
+                className="h-full bg-gradient-to-r from-gold to-orange rounded-full relative"
                 style={{ width: `${progressPercentage}%` }}
               >
-                <div className="absolute right-0 top-1/2 transform -translate-y-1/2 w-3 h-3 bg-white rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                <div className="absolute right-0 top-1/2 transform -translate-y-1/2 w-3 h-3 bg-gold rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-opacity"></div>
               </div>
               <input
                 type="range"

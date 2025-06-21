@@ -32,9 +32,9 @@ export default function Visualizer({ isPlaying, getVisualizerData, className }: 
             
             // Create gradient for each bar
             const gradient = ctx.createLinearGradient(0, canvas.height, 0, canvas.height - barHeight);
-            gradient.addColorStop(0, 'hsl(262, 90%, 67%)');
-            gradient.addColorStop(0.5, 'hsl(330, 81%, 60%)');
-            gradient.addColorStop(1, 'hsl(217, 91%, 60%)');
+            gradient.addColorStop(0, 'hsl(47, 100%, 50%)');
+            gradient.addColorStop(0.5, 'hsl(25, 100%, 55%)');
+            gradient.addColorStop(1, 'hsl(0, 84%, 60%)');
             
             ctx.fillStyle = gradient;
             ctx.fillRect(x, canvas.height - barHeight, barWidth - 1, barHeight);
@@ -51,9 +51,9 @@ export default function Visualizer({ isPlaying, getVisualizerData, className }: 
         for (let i = 0; i < barCount; i++) {
           const barHeight = staticHeights[i] * canvas.height;
           const gradient = ctx.createLinearGradient(0, canvas.height, 0, canvas.height - barHeight);
-          gradient.addColorStop(0, 'hsl(262, 90%, 67%)');
-          gradient.addColorStop(0.5, 'hsl(330, 81%, 60%)');
-          gradient.addColorStop(1, 'hsl(217, 91%, 60%)');
+          gradient.addColorStop(0, 'hsl(47, 100%, 50%)');
+          gradient.addColorStop(0.5, 'hsl(25, 100%, 55%)');
+          gradient.addColorStop(1, 'hsl(0, 84%, 60%)');
           
           ctx.fillStyle = gradient;
           ctx.fillRect(i * barWidth, canvas.height - barHeight, barWidth - 2, barHeight);
@@ -89,11 +89,11 @@ interface StaticVisualizerProps {
 export function StaticVisualizer({ className }: StaticVisualizerProps) {
   return (
     <div className={cn("flex space-x-1", className)}>
-      <div className="w-1 h-4 bg-gradient-to-t from-neon-purple to-neon-pink rounded visualizer-bar"></div>
-      <div className="w-1 h-6 bg-gradient-to-t from-neon-pink to-neon-blue rounded visualizer-bar"></div>
-      <div className="w-1 h-3 bg-gradient-to-t from-neon-blue to-neon-green rounded visualizer-bar"></div>
-      <div className="w-1 h-8 bg-gradient-to-t from-neon-green to-neon-red rounded visualizer-bar"></div>
-      <div className="w-1 h-4 bg-gradient-to-t from-neon-red to-neon-purple rounded visualizer-bar"></div>
+      <div className="w-1 h-4 bg-gradient-to-t from-gold to-orange rounded visualizer-bar"></div>
+      <div className="w-1 h-6 bg-gradient-to-t from-orange to-red rounded visualizer-bar"></div>
+      <div className="w-1 h-3 bg-gradient-to-t from-red to-purple rounded visualizer-bar"></div>
+      <div className="w-1 h-8 bg-gradient-to-t from-purple to-green rounded visualizer-bar"></div>
+      <div className="w-1 h-4 bg-gradient-to-t from-green to-gold rounded visualizer-bar"></div>
     </div>
   );
 }

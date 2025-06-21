@@ -8,7 +8,7 @@ import TrackList from '@/components/track-list';
 import AudioPlayer from '@/components/audio-player';
 import Visualizer from '@/components/visualizer';
 import { Button } from '@/components/ui/button';
-import { Heart, User, Menu, Music } from 'lucide-react';
+import { Heart, User, Menu, Music, Play } from 'lucide-react';
 
 export default function Home() {
   const audioPlayer = useAudioPlayer();
@@ -33,27 +33,17 @@ export default function Home() {
 
   return (
     <div className="min-h-screen text-white">
-      {/* Particle Background */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="particle" style={{ top: '10%', left: '10%', animationDelay: '0s' }}></div>
-        <div className="particle" style={{ top: '20%', left: '80%', animationDelay: '1s' }}></div>
-        <div className="particle" style={{ top: '60%', left: '20%', animationDelay: '2s' }}></div>
-        <div className="particle" style={{ top: '80%', left: '70%', animationDelay: '3s' }}></div>
-        <div className="particle" style={{ top: '40%', left: '90%', animationDelay: '1.5s' }}></div>
-        <div className="particle" style={{ top: '70%', left: '10%', animationDelay: '2.5s' }}></div>
-      </div>
-
       {/* Header Navigation */}
-      <header className="relative z-50 glassmorphic border-b border-white/10">
+      <header className="sticky top-0 z-50 card-modern border-b border-border">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             {/* Logo */}
             <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-gradient-to-r from-neon-purple to-neon-pink rounded-lg flex items-center justify-center animate-glow">
-                <Music className="w-6 h-6 text-white" />
+              <div className="w-10 h-10 bg-gradient-to-r from-gold to-orange rounded-lg flex items-center justify-center">
+                <Music className="w-6 h-6 text-black" />
               </div>
-              <h1 className="text-2xl font-bold neon-text text-neon-purple">
-                BEAT<span className="text-neon-pink">BOX</span>
+              <h1 className="text-2xl font-bold gradient-text">
+                HONEY<span className="text-orange">BEATS</span>
               </h1>
             </div>
 
@@ -67,23 +57,23 @@ export default function Home() {
               <Button
                 variant="ghost"
                 size="sm"
-                className="p-3 glassmorphic rounded-full hover:bg-white/20 transition-all duration-300"
+                className="p-3 rounded-full hover:bg-muted transition-colors"
               >
-                <Heart className="w-5 h-5 text-neon-pink" />
+                <Heart className="w-5 h-5 text-red" />
               </Button>
               <Button
                 variant="ghost"
                 size="sm"
-                className="p-3 glassmorphic rounded-full hover:bg-white/20 transition-all duration-300"
+                className="p-3 rounded-full hover:bg-muted transition-colors"
               >
-                <User className="w-5 h-5 text-neon-blue" />
+                <User className="w-5 h-5 text-gold" />
               </Button>
               <Button
                 variant="ghost"
                 size="sm"
-                className="md:hidden p-3 glassmorphic rounded-full"
+                className="md:hidden p-3 rounded-full hover:bg-muted"
               >
-                <Menu className="w-5 h-5 text-white" />
+                <Menu className="w-5 h-5 text-foreground" />
               </Button>
             </div>
           </div>
@@ -95,56 +85,46 @@ export default function Home() {
         </div>
       </header>
 
-      {/* Hero Section with Featured Artist */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        {/* Background with blur effect */}
-        <div 
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ 
-            backgroundImage: "url('https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080')",
-            filter: 'blur(3px)'
-          }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/50 to-transparent" />
-        
-        <div className="relative z-10 text-center px-4">
+      {/* Hero Section */}
+      <section className="py-20 px-4">
+        <div className="container mx-auto text-center">
           {/* Main Featured Artist */}
-          <div className="mb-8">
-            <h2 className="text-6xl md:text-8xl font-black neon-text text-neon-purple mb-4 animate-glow">
+          <div className="mb-12">
+            <h2 className="text-5xl md:text-7xl font-black mb-4 gradient-text">
               YO YO HONEY SINGH
             </h2>
-            <p className="text-2xl md:text-3xl text-neon-pink mb-8 font-bold">
+            <p className="text-xl md:text-2xl text-orange mb-8 font-semibold">
               The King of Desi Hip-Hop is Back!
             </p>
           </div>
 
-          {/* Featured Album Art with 3D Effect */}
-          <div className="album-3d mb-8">
-            <img 
-              src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400"
-              alt="Featured Album"
-              className="w-64 h-64 md:w-80 md:h-80 mx-auto rounded-3xl shadow-2xl animate-rotate-3d"
-              style={{ 
-                boxShadow: '0 20px 40px rgba(139, 92, 246, 0.5), 0 0 80px rgba(236, 72, 153, 0.3)' 
-              }}
-            />
+          {/* Featured Album Art - Modern Card */}
+          <div className="mb-12">
+            <div className="card-modern w-80 h-80 mx-auto p-6 hover-lift">
+              <img 
+                src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400"
+                alt="Featured Album"
+                className="w-full h-56 object-cover rounded-lg mb-4"
+              />
+              <h3 className="text-xl font-bold text-gold mb-2">Glory</h3>
+              <p className="text-muted-foreground">Latest Album</p>
+            </div>
           </div>
 
-          {/* Play Button */}
-          <Button className="group relative px-12 py-4 glassmorphic rounded-full font-bold text-xl hover:scale-110 transition-all duration-300 animate-pulse-neon border-0 bg-transparent">
-            <i className="fas fa-play mr-3 text-neon-green"></i>
+          {/* Play Button - Modern */}
+          <Button className="bg-gradient-to-r from-gold to-orange text-black font-bold px-8 py-3 rounded-full text-lg hover:scale-105 transition-transform">
+            <Play className="w-5 h-5 mr-2" fill="currentColor" />
             PLAY NOW
-            <div className="absolute inset-0 rounded-full bg-gradient-to-r from-neon-purple to-neon-pink opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
           </Button>
-        </div>
 
-        {/* 3D Music Visualizer */}
-        <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2">
-          <Visualizer 
-            isPlaying={audioPlayer.isPlaying} 
-            getVisualizerData={audioPlayer.getVisualizerData}
-            className="w-48 h-16"
-          />
+          {/* Music Visualizer */}
+          <div className="mt-12">
+            <Visualizer 
+              isPlaying={audioPlayer.isPlaying} 
+              getVisualizerData={audioPlayer.getVisualizerData}
+              className="w-48 h-16 mx-auto"
+            />
+          </div>
         </div>
       </section>
 

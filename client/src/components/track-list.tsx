@@ -40,24 +40,24 @@ export default function TrackList({ onTrackSelect, currentTrack }: TrackListProp
     );
   }
 
-  const neonColors = ['text-neon-purple', 'text-neon-pink', 'text-neon-blue', 'text-neon-green', 'text-neon-red'];
+  const colors = ['text-gold', 'text-orange', 'text-red', 'text-purple', 'text-green'];
 
   return (
-    <section className="py-20 relative">
+    <section className="py-20">
       <div className="container mx-auto px-4">
-        <h2 className="text-4xl md:text-5xl font-black text-center mb-16 neon-text text-neon-red">
+        <h2 className="text-4xl md:text-5xl font-black text-center mb-16 gradient-text">
           TOP HITS
         </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 gap-4">
           {tracks?.map((track, index) => {
             const isCurrentTrack = currentTrack?.id === track.id;
-            const colorClass = neonColors[index % neonColors.length];
+            const colorClass = colors[index % colors.length];
             
             return (
               <div
                 key={track.id}
-                className="glassmorphic rounded-2xl p-6 hover:scale-105 transition-all duration-300 group cursor-pointer"
+                className="card-modern p-4 hover-lift group cursor-pointer"
                 onClick={() => onTrackSelect(track)}
               >
                 <div className="flex items-center space-x-4">
@@ -65,24 +65,24 @@ export default function TrackList({ onTrackSelect, currentTrack }: TrackListProp
                     <img
                       src={track.coverUrl}
                       alt={track.title}
-                      className="w-16 h-16 rounded-xl shadow-lg"
+                      className="w-16 h-16 rounded-lg object-cover"
                     />
                     {isCurrentTrack && (
-                      <div className="absolute inset-0 rounded-xl bg-black/50 flex items-center justify-center">
-                        <div className="animate-spin w-4 h-4 border-2 border-neon-green border-t-transparent rounded-full"></div>
+                      <div className="absolute inset-0 rounded-lg bg-black/50 flex items-center justify-center">
+                        <div className="animate-spin w-4 h-4 border-2 border-gold border-t-transparent rounded-full"></div>
                       </div>
                     )}
                   </div>
-                  <div className="flex-1">
-                    <h3 className={`text-lg font-bold text-white group-hover:${colorClass} transition-colors ${isCurrentTrack ? colorClass : ''}`}>
+                  <div className="flex-1 min-w-0">
+                    <h3 className={`text-lg font-bold text-foreground group-hover:${colorClass} transition-colors ${isCurrentTrack ? colorClass : ''}`}>
                       {track.title}
                     </h3>
-                    <p className="text-gray-400">{track.artist}</p>
-                    <div className="flex items-center mt-2">
+                    <p className="text-muted-foreground">{track.artist}</p>
+                    <div className="flex items-center mt-1 space-x-3">
                       <StaticVisualizer className={isCurrentTrack ? "opacity-100" : "opacity-0 group-hover:opacity-100 transition-opacity"} />
-                      <span className="ml-3 text-sm text-gray-400">{formatTime(track.duration)}</span>
+                      <span className="text-sm text-muted-foreground">{formatTime(track.duration)}</span>
                       {track.playCount && (
-                        <span className="ml-2 text-sm text-gray-500">
+                        <span className="text-sm text-muted-foreground">
                           • {formatPlayCount(track.playCount)} plays
                         </span>
                       )}
@@ -91,9 +91,9 @@ export default function TrackList({ onTrackSelect, currentTrack }: TrackListProp
                   <Button
                     variant="ghost"
                     size="sm"
-                    className="w-12 h-12 glassmorphic rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-white/10"
+                    className="w-10 h-10 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-muted"
                   >
-                    <Play className="text-neon-green ml-1 w-4 h-4" fill="currentColor" />
+                    <Play className="text-gold ml-0.5 w-4 h-4" fill="currentColor" />
                   </Button>
                 </div>
               </div>
