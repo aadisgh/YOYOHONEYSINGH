@@ -1,4 +1,6 @@
 import { users, albums, tracks, playlists, playlistTracks, type User, type InsertUser, type Album, type Track, type InsertAlbum, type InsertTrack, type Playlist, type InsertPlaylist } from "@shared/schema";
+import { db } from "./db";
+import { eq } from "drizzle-orm";
 
 export interface IStorage {
   getUser(id: number): Promise<User | undefined>;
@@ -243,4 +245,98 @@ export class MemStorage implements IStorage {
   }
 }
 
-export const storage = new MemStorage();
+export class DatabaseStorage implements IStorage {
+  async getUser(id: number): Promise<User | undefined> {
+    const [user] = await db.select().from(users).where(eq(users.id, id));
+    return user || undefined;
+  }
+
+  async getUserByUsername(username: string): Promise<User | undefined> {
+    const [user] = await db.select().from(users).where(eq(users.username, username));
+    return user || undefined;
+  }
+
+  async createUser(insertUser: InsertUser): Promise<User> {
+    const [user] = await db
+      .insert(users)
+      .values(insertUser)
+      .returning();
+    return user;
+  }
+
+  async getAlbums(): Promise<Album[]> {
+    return await db.select().from(albums);
+  }
+
+  async getAlbum(id: number): Promise<Album | undefined> {
+    const [album] = await db.select().from(albums).where(eq(albums.id, id));
+    return album || undefined;
+  }
+
+  async createAlbum(insertAlbum: InsertAlbum): Promise<Album> {
+    const [album] = await db
+      .insert(albums)
+      .values(insertAlbum)
+      .returning();
+    return album;
+  }
+
+  async getTracks(): Promise<Track[]> {
+    return await db.select().from(tracks);
+  }
+
+  async getTrack(id: number): Promise<Track | undefined> {
+    const [track] = await db.select().from(tracks).where(eq(tracks.id, id));
+    return track || undefined;
+  }
+
+  async getTracksByAlbum(albumId: number): Promise<Track[]> {
+    return await db.select().from(tracks).where(eq(tracks.albumId, albumId));
+  }
+
+  async searchTracks(query: string): Promise<Track[]> {
+    const results = await db.select().from(tracks);
+    const lowerQuery = query.toLowerCase();
+    return results.filter(track =>
+      track.title.toLowerCase().includes(lowerQuery) ||
+      track.artist.toLowerCase().includes(lowerQuery)
+    );
+  }
+
+  async incrementPlayCount(trackId: number): Promise<void> {
+    const [track] = await db.select().from(tracks).where(eq(tracks.id, trackId));
+    if (track) {
+      await db
+        .update(tracks)
+        .set({ playCount: (track.playCount || 0) + 1 })
+        .where(eq(tracks.id, trackId));
+    }
+  }
+
+  async createTrack(insertTrack: InsertTrack): Promise<Track> {
+    const [track] = await db
+      .insert(tracks)
+      .values({ ...insertTrack, playCount: 0 })
+      .returning();
+    return track;
+  }
+
+  async getPlaylists(): Promise<Playlist[]> {
+    return await db.select().from(playlists);
+  }
+
+  async getPlaylist(id: number): Promise<Playlist | undefined> {
+    const [playlist] = await db.select().from(playlists).where(eq(playlists.id, id));
+    return playlist || undefined;
+  }
+
+  async createPlaylist(insertPlaylist: InsertPlaylist): Promise<Playlist> {
+    const [playlist] = await db
+      .insert(playlists)
+      .values(insertPlaylist)
+      .returning();
+    return playlist;
+  }
+}
+
+export const storage = new DatabaseStorage();
