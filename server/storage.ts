@@ -82,14 +82,14 @@ export class MemStorage implements IStorage {
     this.albums.set(album3.id, album3);
     this.albums.set(album4.id, album4);
 
-    // Create sample tracks
+    // Create sample tracks with working HTML5 test audio
     const sampleTracks: Omit<Track, 'id'>[] = [
       {
         title: "Blue Eyes",
         artist: "Yo Yo Honey Singh",
         albumId: album1.id,
-        duration: 225,
-        audioUrl: "https://www.soundjay.com/misc/sounds/bell-ringing-05.wav",
+        duration: 30,
+        audioUrl: "data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+D2wm0gBTuB0PLNbSIIJXfO8Nd0KwQgd8n1w2ogBTmByu7tcyoEEWu/8Nqe0gINAKdgOQJQp+b1wm0gBT2B0PLNbSUHKXDN8dd2KgQod9Xx0HciAy+A0+7Obi0FGGu/7/2efpfS",
         coverUrl: album1.coverUrl,
         playCount: 1500000,
       },
@@ -97,8 +97,8 @@ export class MemStorage implements IStorage {
         title: "Angreji Beat",
         artist: "Yo Yo Honey Singh ft. Gippy Grewal",
         albumId: album2.id,
-        duration: 252,
-        audioUrl: "https://www.soundjay.com/misc/sounds/bell-ringing-05.wav",
+        duration: 30,
+        audioUrl: "https://html5test.com/samples/audio/beep.wav",
         coverUrl: album2.coverUrl,
         playCount: 2000000,
       },
@@ -106,8 +106,8 @@ export class MemStorage implements IStorage {
         title: "Brown Rang",
         artist: "Yo Yo Honey Singh",
         albumId: album3.id,
-        duration: 208,
-        audioUrl: "https://www.soundjay.com/misc/sounds/bell-ringing-05.wav",
+        duration: 30,
+        audioUrl: "https://www.w3schools.com/html/horse.ogg",
         coverUrl: album3.coverUrl,
         playCount: 1800000,
       },
@@ -115,8 +115,8 @@ export class MemStorage implements IStorage {
         title: "Lungi Dance",
         artist: "Yo Yo Honey Singh",
         albumId: album1.id,
-        duration: 245,
-        audioUrl: "https://www.soundjay.com/misc/sounds/bell-ringing-05.wav",
+        duration: 30,
+        audioUrl: "https://www.w3schools.com/html/horse.mp3",
         coverUrl: album1.coverUrl,
         playCount: 3000000,
       },
@@ -124,8 +124,8 @@ export class MemStorage implements IStorage {
         title: "Dope Shope",
         artist: "Yo Yo Honey Singh ft. Deep Money",
         albumId: album3.id,
-        duration: 232,
-        audioUrl: "https://www.soundjay.com/misc/sounds/bell-ringing-05.wav",
+        duration: 30,
+        audioUrl: "https://interactive-examples.mdn.mozilla.net/media/cc0-audio/t-rex-roar.mp3",
         coverUrl: album3.coverUrl,
         playCount: 1200000,
       },
@@ -133,8 +133,8 @@ export class MemStorage implements IStorage {
         title: "Love Dose",
         artist: "Yo Yo Honey Singh",
         albumId: album2.id,
-        duration: 258,
-        audioUrl: "https://www.soundjay.com/misc/sounds/bell-ringing-05.wav",
+        duration: 30,
+        audioUrl: "https://sample-videos.com/zip/10/mp3/SampleAudio_0.4mb.mp3",
         coverUrl: album2.coverUrl,
         playCount: 2500000,
       },
@@ -173,7 +173,11 @@ export class MemStorage implements IStorage {
 
   async createAlbum(insertAlbum: InsertAlbum): Promise<Album> {
     const id = this.currentAlbumId++;
-    const album: Album = { ...insertAlbum, id };
+    const album: Album = { 
+      ...insertAlbum, 
+      id,
+      releaseYear: insertAlbum.releaseYear ?? null
+    };
     this.albums.set(id, album);
     return album;
   }
@@ -208,7 +212,12 @@ export class MemStorage implements IStorage {
 
   async createTrack(insertTrack: InsertTrack): Promise<Track> {
     const id = this.currentTrackId++;
-    const track: Track = { ...insertTrack, id, playCount: 0 };
+    const track: Track = { 
+      ...insertTrack, 
+      id, 
+      playCount: 0,
+      albumId: insertTrack.albumId ?? null
+    };
     this.tracks.set(id, track);
     return track;
   }
@@ -223,7 +232,12 @@ export class MemStorage implements IStorage {
 
   async createPlaylist(insertPlaylist: InsertPlaylist): Promise<Playlist> {
     const id = this.currentPlaylistId++;
-    const playlist: Playlist = { ...insertPlaylist, id };
+    const playlist: Playlist = { 
+      ...insertPlaylist, 
+      id,
+      coverUrl: insertPlaylist.coverUrl ?? null,
+      userId: insertPlaylist.userId ?? null
+    };
     this.playlists.set(id, playlist);
     return playlist;
   }

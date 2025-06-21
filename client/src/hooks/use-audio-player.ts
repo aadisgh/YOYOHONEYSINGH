@@ -30,7 +30,7 @@ export const useAudioPlayer = () => {
   const initializeAudio = useCallback(() => {
     if (!audioRef.current) {
       audioRef.current = new Audio();
-      audioRef.current.crossOrigin = 'anonymous';
+      audioRef.current.preload = 'metadata';
       
       audioRef.current.addEventListener('loadstart', () => {
         setState(prev => ({ ...prev, isLoading: true, error: null }));
@@ -38,6 +38,16 @@ export const useAudioPlayer = () => {
 
       audioRef.current.addEventListener('canplay', () => {
         setState(prev => ({ ...prev, isLoading: false }));
+      });
+
+      audioRef.current.addEventListener('loadedmetadata', () => {
+        if (audioRef.current) {
+          setState(prev => ({ 
+            ...prev, 
+            duration: audioRef.current!.duration || 0,
+            isLoading: false
+          }));
+        }
       });
 
       audioRef.current.addEventListener('timeupdate', () => {
@@ -55,15 +65,16 @@ export const useAudioPlayer = () => {
       });
 
       audioRef.current.addEventListener('error', (e) => {
+        console.error('Audio error:', e);
         setState(prev => ({ 
           ...prev, 
           isLoading: false, 
-          error: 'Failed to load audio' 
+          error: 'Audio file could not be loaded. Please try a different track.' 
         }));
       });
 
       audioRef.current.addEventListener('play', () => {
-        setState(prev => ({ ...prev, isPlaying: true }));
+        setState(prev => ({ ...prev, isPlaying: true, error: null }));
       });
 
       audioRef.current.addEventListener('pause', () => {

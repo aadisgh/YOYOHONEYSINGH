@@ -154,6 +154,13 @@ export default function Home() {
       {/* Popular Tracks Section */}
       <TrackList onTrackSelect={handleTrackSelect} currentTrack={audioPlayer.currentTrack} />
 
+      {/* Error Display */}
+      {audioPlayer.error && (
+        <div className="fixed top-20 left-1/2 transform -translate-x-1/2 z-50 glassmorphic border border-red-500/50 rounded-lg p-4 bg-red-900/20">
+          <p className="text-red-300 text-sm">{audioPlayer.error}</p>
+        </div>
+      )}
+
       {/* Bottom Music Player */}
       <AudioPlayer
         currentTrack={audioPlayer.currentTrack}
